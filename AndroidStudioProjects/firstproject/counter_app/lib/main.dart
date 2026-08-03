@@ -24,6 +24,8 @@ void main() {
   double selisih = totalUmum - totalAnggota;
   print("Selisih vs umum : Rp$selisih");
 }
+// pemilihan tipe data harus bner agar perhitungan menjadi akurat
+// pakai int karena jumlah barang tidak mungkin pecahan. Jika tipe data salah dipilih,
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
