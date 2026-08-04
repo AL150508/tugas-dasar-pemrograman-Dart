@@ -2,27 +2,118 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
-
-  String namaBarang = "Buku Tulis";
+  // data barang
+  String namaBarang = "bakso tanpa tepung";
   double hargaAnggota = 3000;
   double hargaUmum = 3500;
-  int jumlahStok = 40;
-  bool tersedia = true;
+  int jumlahBeli = 40;
+  int jumlahStok = 20;
+  String kategori = "makanan";
 
-  print("=== KARTU DATA BARANG ===");
-  print("Nama : $namaBarang");
-  print("Harga Anggota : Rp$hargaAnggota");
-  print("Harga Umum : Rp$hargaUmum");
-  print("Stok : $jumlahStok");
-  print("Tersedia : $tersedia");
+  // status pembeli
+  bool anggota = true;
 
-  int jumlahBeli = 3;
-  double totalAnggota = jumlahBeli * hargaAnggota;
-  print("Total (anggota) $jumlahBeli pcs: Rp$totalAnggota");
+  // status ketersediaan berdasarkan stok
+  bool tersedia;
+  if (jumlahStok > 0) {
+    tersedia = true;
+  } else {
+    tersedia = false;
+  }
 
-  double totalUmum = jumlahBeli * hargaUmum;
-  double selisih = totalUmum - totalAnggota;
-  print("Selisih vs umum : Rp$selisih");
+  // 1. tentukan harga sesuai jenis pembeli
+  double hargaSatuan;
+  if (anggota) {
+    hargaSatuan = hargaAnggota;
+  } else {
+    hargaSatuan = hargaUmum;
+  }
+
+  // hitung total belanja sebelum diskon
+  double total = hargaSatuan * jumlahBeli;
+
+  // 2. tentukan potongan borongan (if bertingkat)
+  double persenPotongan;
+  if (total > 200000) {
+    persenPotongan = 0.10;
+  } else if (total > 100000) {
+    persenPotongan = 0.05;
+  } else {
+    persenPotongan = 0.0;
+  }
+
+  // hitung potongan dan harga akhir
+  double potongan = total * persenPotongan;
+  double hargaAkhir = total - potongan;
+
+  // tentukan rak penyimpanan berdasarkan kategori
+  String rak;
+  switch (kategori) {
+    case "atk":
+      rak = "Rak 1";
+      break;
+    case "makanan":
+      rak = "Rak 2";
+      break;
+    case "minuman":
+      rak = "Rak 3";
+      break;
+    default:
+      rak = "Rak lain";
+  }
+
+  // kenapa pakai switch biar ringan
+  // soalnya di sini cuma ngecek satu variabel (kategori) yang dibandingin
+  // sama beberapa nilai pasti makanan. kalau pakai if-else
+  // berjenjang jadi banyak baris "if kategori == ..." yang mirip-mirip dan
+  // kebaca berulang
+  // tampilkan hasil
+  print("=== STRUK BELANJA ===");
+  print("Nama barang   : $namaBarang");
+  print("Status        : ${anggota ? 'Anggota' : 'Umum'}");
+  print("Harga satuan  : Rp$hargaSatuan");
+  print("Jumlah beli   : $jumlahBeli pcs");
+  print("Total belanja : Rp$total");
+  print(
+    "Potongan      : ${(persenPotongan * 100).toStringAsFixed(0)}% (Rp$potongan)",
+  );
+  print("Harga akhir   : Rp$hargaAkhir");
+  print("Stok          : $jumlahStok");
+  if (tersedia) {
+    print("Status stok   : Tersedia");
+  } else {
+    print("Status stok   : Stok habis, tidak tersedia");
+  }
+  print("Kategori      : $kategori");
+  print("Rak           : $rak");
+
+  // ===== uji skenario tabel c =====
+  print("");
+  print("=== UJI SKENARIO ===");
+  ujiSkenario(true, 250000); // a. anggota, total 250.000
+  ujiSkenario(false, 150000); // b. umum, total 150.000
+  ujiSkenario(false, 50000); // c. umum, total 50.000
+}
+
+// fungsi buat uji logika potongan borongan terhadap total tertentu
+void ujiSkenario(bool anggota, double total) {
+  double persenPotongan;
+  if (total > 200000) {
+    persenPotongan = 0.10;
+  } else if (total > 100000) {
+    persenPotongan = 0.05;
+  } else {
+    persenPotongan = 0.0;
+  }
+
+  double potongan = total * persenPotongan;
+  double hargaAkhir = total - potongan;
+
+  print(
+    "${anggota ? 'Anggota' : 'Umum'}, total $total "
+    "-> Potongan: ${(persenPotongan * 100).toStringAsFixed(0)}% "
+    "-> Harga akhir: Rp$hargaAkhir",
+  );
 }
 // pemilihan tipe data harus bner agar perhitungan menjadi akurat
 // pakai int karena jumlah barang tidak mungkin pecahan. Jika tipe data salah dipilih,
