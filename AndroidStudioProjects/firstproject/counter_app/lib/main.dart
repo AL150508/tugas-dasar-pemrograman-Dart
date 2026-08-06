@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+
+  /* ===== KODE TUGAS SEBELUMNYA (RPL-12.2-201 s.d. 204) - DIKOMEN DULU =====
   // data barang
   String namaBarang = "bakso tanpa tepung";
   double hargaAnggota = 3000;
@@ -62,12 +64,6 @@ void main() {
       rak = "Rak lain";
   }
 
-  // kenapa pakai switch biar ringan
-  // soalnya di sini cuma ngecek satu variabel (kategori) yang dibandingin
-  // sama beberapa nilai pasti makanan. kalau pakai if-else
-  // berjenjang jadi banyak baris "if kategori == ..." yang mirip-mirip dan
-  // kebaca berulang
-  // tampilkan hasil
   print("=== STRUK BELANJA ===");
   print("Nama barang   : $namaBarang");
   print("Status        : ${anggota ? 'Anggota' : 'Umum'}");
@@ -87,15 +83,40 @@ void main() {
   print("Kategori      : $kategori");
   print("Rak           : $rak");
 
-  // ===== uji skenario tabel c =====
   print("");
   print("=== UJI SKENARIO ===");
-  ujiSkenario(true, 250000); // a. anggota, total 250.000
-  ujiSkenario(false, 150000); // b. umum, total 150.000
-  ujiSkenario(false, 50000); // c. umum, total 50.000
-}
+  ujiSkenario(true, 250000);
+  ujiSkenario(false, 150000);
+  ujiSkenario(false, 50000);
+  ===== AKHIR KODE LAMA ===== */
+  /*
+  // daftar barang bernomor
+  List<String> namaBarangList = ["Buku Tulis", "Pulpen", "Penghapus", "Roti"];
+  List<int> hargaBarangList = [3000, 2500, 1500, 5000];
 
-// fungsi buat uji logika potongan borongan terhadap total tertentu
+  print("=== DAFTAR BARANG ===");
+  for (int i = 0; i < namaBarangList.length; i++) {
+    print("${i + 1}. ${namaBarangList[i]} - Rp. ${hargaBarangList[i]}");
+  }
+*/
+  //perulangan while
+  print("");
+  int stok = 3;
+  print("--- Penjualan Buku Tulis ---");
+  while (stok > 0) {
+    stok = stok - 1;
+    print("Terjual 1, sisa stok: $stok");
+  }
+}
+// Bahaya jika kondisi berhenti pada while keliru (misalnya salah menulis stok >= 0
+// alih-alih stok > 0), program bisa terus mengurangi stok sampai minus, sehingga
+// tampil "sisa stok: -1" yang artinya koperasi menjual barang yang sudah tidak ada.
+// Untuk memastikan koperasi tidak menjual melebihi stok, kondisi while harus tepat
+// menggunakan stok > 0, sehingga perulangan otomatis berhenti begitu stok mencapai 0
+// dan tidak akan pernah bernilai negatif.
+
+//
+/*
 void ujiSkenario(bool anggota, double total) {
   double persenPotongan;
   if (total > 200000) {
@@ -115,34 +136,19 @@ void ujiSkenario(bool anggota, double total) {
     "-> Harga akhir: Rp$hargaAkhir",
   );
 }
+*/
 // pemilihan tipe data harus bner agar perhitungan menjadi akurat
 // pakai int karena jumlah barang tidak mungkin pecahan. Jika tipe data salah dipilih,
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -151,15 +157,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -172,51 +169,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('You have pushed the button this many times:'),
             Text(
